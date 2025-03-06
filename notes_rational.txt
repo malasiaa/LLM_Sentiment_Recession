@@ -1,0 +1,21 @@
+# LLM Powered Sentiment Analyzer for Financial News
+
+
+### Here's some of the rational behind the decisions taken:
+I've choosen to retrieve and classify the max amount of articles to have best sentiment classification as possible.
+The premise assumed here was that in order to maximize biases and noise I would need to classify the most articles per day as possible. This way the average would offuscate any sort of micro noises present in news articles.
+
+This includes stretching the free plans apis limits. Each account is limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Each request is limited to 100 articles. Also the free plan is entitled to retrieve data until last month, starting from today - 1 days.
+
+To assure scalability and still the use of free plans, I've decided to do a request by day. This at the limit means retrieving in max 100 articles per day.
+Initially I used just a few terms to retrieve news like "equity markets" and "United states". I was getting 100 articles per day, but I realized that the majority of articles topics didn't had to do with the scope of analysing ressecion fears.
+After finetuning the research terms, I was able to retrieve less (around 15 per day) but more focused on the business case topic. I could at this point I could make a request for several days span, maximizing the 100 articles per day limit while minimizing the number of requests done. Nevertheless this approach could easily be compromissed in case there were changes in terms searched in NewsAPI. For sake of scalability and adaptation, I decided to stay with request per day.
+
+On the approach to classify the recession fear sentiment present in the articles, I decided to use a LLM, more specifically gemini-2.0-pro, which as free API calls but is rate limited, through openrouter API - 20 request per minute and 200 requests per day.
+A more resource efficient a tailored option that I still considered, was to finetune an huggingface free model such as distilbert, to find the recession sentiment in financial institutions. Nevertheless potential challenges could also occour from the current base model, on the classification of what is positive and negative. Regardless, since the resources that the openrouter API consumes are external and free, it was chosen this "brute force" approach.
+Even though to maximize the efficiency number of calls I decided to do them on a by day basis - sending all daily articles to the llm for classification per call. This still has margin to be improved, has the model offers a 2M tokens context window and a max output of 8k. The reason to not send more days per batch relies on the potential for number of articles scalability and adaptability.
+
+### Oversight analysis:
+The Recession Fear Score, appears at some moments to predict the inverse movement of SP500. When recession fear peaks, the index dips. This seems to be particular relevant in higher deltas.
+The 5-day moving average, due to the smoother transition of sentiment seems to behave as a laggind indicator leading SP500 movement.
+Sectorwise, the scores seem to align with the overall SP trend, with some having some more particular behaviours such as Technology and Retail.
