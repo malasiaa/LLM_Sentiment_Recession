@@ -2,7 +2,8 @@
 
 ## Overview
 
-This project leverages a Large Language Model (LLM) to analyze financial news sentiment, specifically focusing on recession fear. By maximizing the number of classified articles per day, the system aims to smooth out micro-noises and biases, providing a more reliable sentiment assessment.
+This project presents a POC that leverages an LLM to analyze financial news sentiment, specifically focusing on recession fear. By maximizing the number of classified articles per day, the system aims to smooth out micro-noises and biases, providing a more reliable sentiment assessment.
+The results were compared with harmonized SP500 trends.
 
 ## Key Features
 
@@ -25,5 +26,6 @@ This project leverages a Large Language Model (LLM) to analyze financial news se
 ## Future Improvements
 
 - Explore fine-tuning models like DistilBERT for a more resource-efficient alternative.
+
 
 - Expand financial indicators beyond recession fear to cover broader economic metrics.
