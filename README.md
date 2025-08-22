@@ -1,4 +1,4 @@
-# LLM-Powered Sentiment Analyzer for Financial News
+# LLM Sentiment Analyzer for Financial News
 
 ## Overview
 
@@ -29,3 +29,4 @@ The results were compared with harmonized SP500 trends.
 
 
 - Expand financial indicators beyond recession fear to cover broader economic metrics.
+
